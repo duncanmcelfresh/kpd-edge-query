@@ -798,13 +798,6 @@ class EdgeSubsetNode(object):
         return best_child
 
     def calc_ucb(self, n_visits_above):
-        # formula from Pedroso/Rei book chapter involves:
-        # z* = best global
-        # w* = worst global
-        # z_n* = best under current node (should save this when backpropagating)
-        # a = (self.mean - self.search_tree.worst_bound) / (self.search_tree.best_bound - self.search_tree.worst_bound)
-        # we are using mean; they advocate using max instead, keeping track of lb for each node
-        # we are not doing the exponential stuff with a
 
         assert n_visits_above > 0
 
