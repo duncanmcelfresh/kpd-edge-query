@@ -205,23 +205,6 @@ class MultistageOutcomeNode(object):
 
         return v_new
 
-    # def walktree(self, queried_edges, edge_outcomes):
-    #     if len(queried_edges) == 0:
-    #         return self
-    #
-    #     if self.children is None:
-    #         self.create_children()
-    #
-    #     chosen_edge_child = self.children[queried_edges[0].index]
-    #     if chosen_edge_child.children is None:
-    #         chosen_edge_child.check_create_children()
-    #     if edge_outcomes[0]:
-    #         chosen_outcome_child = chosen_edge_child.children[0]
-    #     else:
-    #         chosen_outcome_child = chosen_edge_child.children[1]
-    #
-    #     return chosen_outcome_child.walktree(queried_edges[1:], edge_outcomes[1:])
-
     def check_create_children(self):
         if self.children is None:
             # get the set of candidate edges
@@ -360,8 +343,6 @@ class MultistageQueryNode(object):
         return self.total_value / self.num_visits
 
     def calc_ucb(self, n_visits_above):
-        # not clear how to meaningfully keep track of UB/LB when sampling over outcomes.
-        # instead of Pedroso/Rei, use exploration with mean
         if self.num_visits > 0:
             mean = self.total_value / self.num_visits
             if (

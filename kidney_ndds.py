@@ -118,12 +118,6 @@ class NddEdge:
 
     @classmethod
     def from_dict(cls, e_dict, ndds):
-        # find NddEdge among provided ndds...
-        # THIS DOESN'T HAVE TO BE A NddEdge FUNCTION
-
-        # tgt = digraph.vs[e_dict['tgt_id']]
-        # e = cls(tgt, e_dict['weight'], discount=e_dict['discount'], discount_frac=e_dict['discount_frac'],src_id = e_dict['src_id'])
-        # return e
 
         e_tgt_id = e_dict["tgt_id"]
         for e in ndds[e_dict["src_id"]].edges:
@@ -132,9 +126,6 @@ class NddEdge:
         raise Warning("NddEdge not found")
 
     def display(self):
-        # if gamma == 0:
-        #     return "NDD Edge: tgt=%d, weight=%f" % ( self.tgt.id, self.weight)
-        # else:
         return (
             "NDD Edge: tgt=%d, weight=%f, sens=%s, max_discount=%f, discount_frac=%f"
             % (

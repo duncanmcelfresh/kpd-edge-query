@@ -760,52 +760,6 @@ def experiment(args):
                 for result in method_results:
                     f.write(result)
 
-            # # iterate through each edge budget
-            # for edge_budget in egde_budget_set:
-            #
-            #     # ------------------------------------
-            #     # Single-stage: our method
-            #     # ------------------------------------
-            #
-            #     logger.info(
-            #         "running MCTS single-stage with num_query_edges={}".format(
-            #             edge_budget
-            #         )
-            #     )
-            #
-            #     method_name = "mcts_singlestage"
-            #     search_tree = create_edge_subset_search_tree(
-            #         graph,
-            #         edge_budget,
-            #         num_leaf_samples=args.num_leaf_samples,
-            #         num_simulations=10,
-            #         max_nodes=args.max_nodes,
-            #         max_level_for_pruning=args.max_level_for_pruning,
-            #     )
-            #
-            #     start_time = time.time()
-            #     if args.mcts_level_time_limit > 0:
-            #         search_tree.train(level_time_limit=args.mcts_level_time_limit, max_level=args.mcts_max_level)
-            #     runtime = time.time() - start_time
-            #
-            #     logger.info(f"MCTS solution: {search_tree.best_node}")
-            #
-            #     result = get_single_stage_realization_result(
-            #         search_tree.best_node.edge_list,
-            #         edge_budget,
-            #         graph,
-            #         method_name,
-            #         runtime,
-            #         deterministic_sol,
-            #         fail_aware_sol,
-            #         other_data={"num_level_samples": search_tree.num_level_samples},
-            #         outcome_file=outcome_file,
-            #     )
-            #
-            #     logger.info("writing {} results".format(method_name))
-            #     with open(output_file, "a") as f:
-            #         f.write(result)
-
             # ---- new ---- run MCTS only once
 
             # ------------------------------------
@@ -951,38 +905,6 @@ def experiment(args):
             with open(output_file, "a") as f:
                 f.write(result_str)
 
-            # logger.info("running MCTS multi-stage")
-            #
-            # num_query_edges = max_input_num_query_edges
-            # # run pre-training
-            # root, search_tree = create_multistage_root(
-            #     graph, num_query_edges, args.num_multistage_trials
-            # )
-            # start_time = time.time()
-            # num_rollouts = 0
-            # while (time.time() - start_time) < args.time_limit:
-            #     root.sample()
-            #     num_rollouts += 1
-            #
-            # def mcts_next_edge(
-            #     graph, queried_edges, edge_outcomes, num_rollouts=num_rollouts
-            # ):
-            #     # walk down tree via queried edges
-            #     # pick next best edge from tree
-            #     last_edge_node = root.walktree(queried_edges, edge_outcomes)
-            #
-            #     # train for a pre-set amount of time
-            #     start_time = time.time()
-            #     while (time.time() - start_time) < args.stage_time_limit:
-            #         last_edge_node.sample()
-            #         num_rollouts += 1
-            #
-            #     next_edge = last_edge_node.get_best_edge()
-            #     return next_edge
-            #
-            # # run multi-stage trials
-            # logger.info(f"starting multistage test on {num_query_edges} stages")
-            #
             for trial in range(args.num_multistage_trials):
                 #
                 logger.info(f"starting multistage trial {trial + 1}")
